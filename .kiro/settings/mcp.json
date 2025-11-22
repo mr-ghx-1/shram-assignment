@@ -1,0 +1,62 @@
+{
+  "mcpServers": {
+    "supabase": {
+      "url": "https://mcp.supabase.com/mcp",
+      "disabled": false,
+      "autoApprove": [
+        "list_projects",
+        "apply_migration",
+        "search_docs",
+        "execute_sql"
+      ],
+      "disabledTools": [
+        "get_cost",
+        "confirm_cost",
+        "create_project",
+        "pause_project",
+        "restore_project"
+      ]
+    },
+    "livekit-docs": {
+      "url": "https://docs.livekit.io/mcp",
+      "disabled": false,
+      "autoApprove": [
+        "get_docs_overview",
+        "get_pages",
+        "code_search",
+        "docs_search"
+      ]
+    },
+    "vercel": {
+      "url": "https://mcp.vercel.com",
+      "disabled": false,
+      "autoApprove": [
+        "list_projects",
+        "list_teams",
+        "deploy_to_vercel",
+        "web_fetch_vercel_url",
+        "list_deployments",
+        "get_project",
+        "get_deployment_build_logs"
+      ]
+    },
+    "Railway": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@railway/mcp-server"
+      ],
+      "disabled": false,
+      "autoApprove": [
+        "check-railway-status",
+        "create-project-and-link",
+        "link-service",
+        "set-variables",
+        "deploy",
+        "get-logs",
+        "list-projects",
+        "list-deployments"
+      ]
+    }
+  }
+}
