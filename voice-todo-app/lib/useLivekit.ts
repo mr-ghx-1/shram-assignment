@@ -103,6 +103,10 @@ export function useLivekit({
 
       if (!isMountedRef.current) return;
 
+      // Wait a moment for room to be fully established in LiveKit backend
+      // This ensures the room exists before we dispatch the agent
+      await new Promise(resolve => setTimeout(resolve, 500));
+
       const dispatchStartTimestamp = new Date().toISOString();
       console.log(`[${dispatchStartTimestamp}] [useLivekit] Connected to room, dispatching agent for room: ${roomName}`);
 

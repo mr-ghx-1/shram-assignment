@@ -4,7 +4,7 @@ A voice-controlled to-do list web application that uses natural language voice c
 
 ## 🚀 Live Demo
 
-**Deployed Application**: https://voice-todo-i7kkqcpc8-siddhartha-manis-projects.vercel.app
+**Deployed Application**: https://shram-voice-todo.vercel.app
 
 ## 📦 Repository Structure
 

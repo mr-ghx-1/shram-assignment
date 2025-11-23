@@ -70,6 +70,11 @@ export function parseNaturalDate(input: string, referenceDate: Date = new Date()
   else if (normalized.match(/^in \d+ (day|days|week|weeks|month|months)$/)) {
     targetDate = parseRelativeDate(normalized, referenceDate);
   }
+  // Handle "next week [weekday]" (e.g., "next week Wednesday")
+  else if (normalized.match(/^next week (monday|tuesday|wednesday|thursday|friday|saturday|sunday)$/)) {
+    const weekday = normalized.replace('next week ', '');
+    targetDate = getNextWeekday(weekday, referenceDate, true);
+  }
   // Handle "next [weekday]" (e.g., "next Monday")
   else if (normalized.match(/^next (monday|tuesday|wednesday|thursday|friday|saturday|sunday)$/)) {
     const weekday = normalized.replace('next ', '');

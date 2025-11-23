@@ -53,14 +53,15 @@ export async function POST(req: NextRequest) {
     };
 
     // Create new dispatch
-    console.log(`Creating agent dispatch for room: ${roomName}`);
+    // Note: LiveKit automatically creates the room if it doesn't exist
+    console.log(`Creating agent dispatch for room: ${roomName} (room will be auto-created if needed)`);
     const dispatch = await agentDispatchClient.createDispatch(
       roomName,
       AGENT_NAME,
       { metadata: JSON.stringify(metadata) }
     );
 
-    console.log(`Agent dispatched successfully: ${dispatch.id}`);
+    console.log(`Agent dispatched successfully: ${dispatch.id} to room: ${roomName}`);
 
     return NextResponse.json({
       success: true,

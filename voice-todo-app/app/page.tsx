@@ -39,6 +39,9 @@ export default function Home() {
     fetchTasks();
   }, []);
 
+  // Generate unique room name for each session (Pattern 2: Clean Shutdown)
+  const [uniqueRoomName] = useState(() => `voice-todo-room-${Date.now()}`);
+
   // LiveKit integration
   const {
     room,
@@ -50,7 +53,7 @@ export default function Home() {
     isMicrophoneEnabled,
     isPaused,
   } = useLivekit({
-    roomName: 'voice-todo-room',
+    roomName: uniqueRoomName,
     participantName: `user-${Date.now()}`,
     onTranscript: (text) => {
       setTranscript(text);
@@ -61,8 +64,15 @@ export default function Home() {
     },
   });
 
-  // Don't auto-connect - wait for user interaction to avoid autoplay errors
-  // Connection will happen on first spacebar press
+  // Auto-connect with short delay on page load
+  // Delay helps avoid autoplay issues and ensures page is fully loaded
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      connect();
+    }, 1000); // 1 second delay
+
+    return () => clearTimeout(timer);
+  }, [connect]);
 
   // Listen for data messages from agent to update UI
   useEffect(() => {
@@ -146,7 +156,7 @@ export default function Home() {
 
   // Spacebar keyboard shortcut for microphone toggle
   useEffect(() => {
-    const handleKeyDown = async (event: KeyboardEvent) => {
+    const handleKeyDown = (event: KeyboardEvent) => {
       // Only toggle if spacebar is pressed and not in an input field
       if (
         event.code === 'Space' &&
@@ -154,11 +164,6 @@ export default function Home() {
         !['INPUT', 'TEXTAREA'].includes(event.target.tagName)
       ) {
         event.preventDefault(); // Prevent page scroll
-        
-        // Connect on first spacebar press (lazy connection after user interaction)
-        if (!isConnected && !isConnecting) {
-          await connect();
-        }
         
         // Toggle microphone if connected
         if (isConnected) {
@@ -172,7 +177,7 @@ export default function Home() {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [isConnected, isConnecting, connect, toggleMicrophone]);
+  }, [isConnected, toggleMicrophone]);
 
   const handleTaskToggle = async (id: string) => {
     const task = tasks.find(t => t.id === id);

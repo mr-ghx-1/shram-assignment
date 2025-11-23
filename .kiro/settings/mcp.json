@@ -55,7 +55,8 @@
         "deploy",
         "get-logs",
         "list-projects",
-        "list-deployments"
+        "list-deployments",
+        "list-variables"
       ]
     }
   }

@@ -4,11 +4,7 @@ A voice-controlled to-do list application built with Next.js, LiveKit, and AI. M
 
 ## 🚀 Live Demo
 
-**Deployed Application**: [https://voice-todo-app-two.vercel.app](https://voice-todo-app-two.vercel.app)
-
-**Alternative URLs**:
-- https://voice-todo-app-siddhartha-manis-projects.vercel.app
-- https://voice-todo-klpxu0gpc-siddhartha-manis-projects.vercel.app
+**Deployed Application**: [https://shram-voice-todo.vercel.app](https://shram-voice-todo.vercel.app)
 
 **GitHub Repository**: [https://github.com/mr-ghx-1/shram-assignment](https://github.com/mr-ghx-1/shram-assignment)
 

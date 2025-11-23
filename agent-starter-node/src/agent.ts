@@ -326,6 +326,9 @@ export default defineAgent({
       logger.warn('Failed to parse metadata for timezone:', err);
     }
 
+    // Initialize the task function context with CRUD operations
+    const taskFunctionContext = new TaskFunctionContext(ctx.room);
+
     // Set up voice AI pipeline with OpenAI Realtime API
     // This provides an all-in-one speech-to-speech solution with:
     // - Built-in STT (speech-to-text)
@@ -350,9 +353,25 @@ export default defineAgent({
           interrupt_response: true, // Allow user to interrupt agent
         },
       }),
+      // Register tools at session level for Realtime API
+      tools: [
+        taskFunctionContext.get_current_time,
+        taskFunctionContext.create_task,
+        taskFunctionContext.get_tasks,
+        taskFunctionContext.update_task,
+        taskFunctionContext.delete_task,
+      ],
     };
 
     const session = new voice.AgentSession(sessionOptions);
+    
+    logger.info('Registered 5 tools with AgentSession:', [
+      'get_current_time',
+      'create_task',
+      'get_tasks',
+      'update_task',
+      'delete_task',
+    ]);
 
     // Metrics collection for monitoring pipeline performance
     const usageCollector = new metrics.UsageCollector();
@@ -373,9 +392,6 @@ export default defineAgent({
 
     // Track conversation state for debugging and monitoring
     let conversationTurnCount = 0;
-
-    // Initialize the task function context with CRUD operations
-    const taskFunctionContext = new TaskFunctionContext(ctx.room);
 
     // Join the room and connect to the user first
     await ctx.connect();
